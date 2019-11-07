@@ -1,0 +1,20 @@
+{
+    "name": "fcc-converter",
+    "version": "0.0.1",
+    "main": "index.js",
+    "author": "Gordon Doskas <gordon@doskas.me> (gordondoskas.com)",
+    "license": "MIT",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "concurrently": "^5.0.0",
+        "nodemon": "^1.19.4"
+    },
+    "scripts": {
+        "server": "nodemon server/index.js",
+        "client": "yarn --cwd client start",
+        "start": "concurrently \"yarn run server\" \"yarn run client\""
+    }
+}
