@@ -37,11 +37,12 @@ const Card = styled.section`
 const List = styled.ul``;
 
 const App = () => {
+    const [input, setInput] = React.useState('');
     const [responses, setResponses] = React.useState([]);
     const [result, setResult] = React.useState(null);
 
     async function getConversion() {
-        const response = await fetch(`${BASE_URL}/api/convert`);
+        const response = await fetch(`${BASE_URL}/api/convert?input=${input}`);
         const data = await response.json();
         console.log(data);
         setResponses(prevState => [data, ...prevState]);
@@ -144,7 +145,14 @@ const App = () => {
 
                 <Card>
                     <h3>Input</h3>
-                    <Input onClick={getConversion}>Convert</Input>
+                    <Input
+                        value={input}
+                        onClick={getConversion}
+                        onChange={e => setInput(e.target.value)}
+                    >
+                        Convert
+                    </Input>
+                    {input && <Code box>{{ input }}</Code>}
 
                     {result && (
                         <>

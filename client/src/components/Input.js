@@ -19,10 +19,10 @@ const StyledInput = styled.input`
     font-family: 'Ubuntu Mono', monospace;
     font-size: 1em;
 `;
-const Input = ({ children, onClick }) => (
+const Input = ({ children, onClick, ...restProps }) => (
     <InputWrap>
         <InputInner>
-            <StyledInput />
+            <StyledInput {...restProps} />
         </InputInner>
         <div>
             <Button onClick={onClick}>{children}</Button>
