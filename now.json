@@ -1,0 +1,59 @@
+{
+    "name": "fcc-converter",
+    "version": 2,
+    "builds": [
+        { "src": "server/index.js", "use": "@now/node-server" },
+        {
+            "src": "client/package.json",
+            "use": "@now/static-build",
+            "config": { "distDir": "build" }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/convert?(.*)",
+            "dest": "/server/index.js",
+            "methods": ["GET"]
+        },
+        {
+            "src": "/",
+            "headers": {
+                "cache-control": "s-maxage=0"
+            },
+            "dest": "/client/index.html"
+        },
+        {
+            "src": "/static/(.*)",
+            "headers": { "cache-control": "s-maxage=31536000,immutable" },
+            "dest": "/client/static/$1"
+        },
+        {
+            "src": "/manifest.json",
+            "headers": {
+                "cache-control": "s-maxage=0"
+            },
+            "dest": "/client/manifest.json"
+        },
+        {
+            "src": "/favicon.ico",
+            "headers": {
+                "cache-control": "s-maxage=0"
+            },
+            "dest": "/client/favicon.ico"
+        },
+        {
+            "src": "/logo192.png",
+            "headers": {
+                "cache-control": "s-maxage=0"
+            },
+            "dest": "/client/logo192.png"
+        },
+        {
+            "src": "/logo512.png",
+            "headers": {
+                "cache-control": "s-maxage=0"
+            },
+            "dest": "/client/logo512.png"
+        }
+    ]
+}

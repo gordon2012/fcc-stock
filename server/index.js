@@ -2,7 +2,10 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const origin = 'http://localhost:3000'; // todo: live
+const origin =
+    process.env.NODE_ENV !== 'production'
+        ? 'http://localhost:3000'
+        : 'https://converter.gordondoskas.com';
 app.use(cors({ origin }));
 
 const conversion = {
