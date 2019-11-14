@@ -44,7 +44,6 @@ const App = () => {
     async function getConversion() {
         const response = await fetch(`${BASE_URL}/api/convert?input=${input}`);
         const data = await response.json();
-        console.log(data);
         setResponses(prevState => [data, ...prevState]);
         setResult(data);
     }
@@ -152,12 +151,13 @@ const App = () => {
                     >
                         Convert
                     </Input>
-                    {input && <Code box>{{ input }}</Code>}
 
                     {result && (
                         <>
                             <h3>Result</h3>
-                            <Code box>{result}</Code>
+                            <Code box>
+                                {result.string ? result.string : result}
+                            </Code>
                         </>
                     )}
 
