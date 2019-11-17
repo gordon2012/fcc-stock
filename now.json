@@ -1,5 +1,5 @@
 {
-    "name": "fcc-converter",
+    "name": "fcc-boilerplate-infosec",
     "version": 2,
     "builds": [
         { "src": "server/index.js", "use": "@now/node-server" },
@@ -11,7 +11,7 @@
     ],
     "routes": [
         {
-            "src": "/api/convert?(.*)",
+            "src": "/api/test",
             "dest": "/server/index.js",
             "methods": ["GET"]
         },
