@@ -42,7 +42,7 @@ const App = () => {
     const [result, setResult] = React.useState(null);
 
     async function getTest() {
-        const response = await fetch(`${BASE_URL}/api/test`);
+        const response = await fetch(`${BASE_URL}/api/example`);
         const data = await response.json();
         setResponses(prevState => [data, ...prevState]);
         setResult(data);
