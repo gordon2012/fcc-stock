@@ -1,5 +1,5 @@
 {
-    "name": "fcc-boilerplate-infosec",
+    "name": "fcc-boilerplate-infosec-mongo",
     "version": 2,
     "builds": [
         { "src": "server/index.js", "use": "@now/node-server" },
@@ -11,7 +11,7 @@
     ],
     "routes": [
         {
-            "src": "/api/test",
+            "src": "/api/example",
             "dest": "/server/index.js",
             "methods": ["GET"]
         },
