@@ -5,6 +5,8 @@ import { BASE_URL } from './index';
 import Layout from './components/Layout';
 import Code from './components/Code';
 import Input from './components/Input';
+import Button from './components/Button';
+import Form from './components/Form';
 
 const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono|Ubuntu:400,700&display=swap');
@@ -37,16 +39,21 @@ const Card = styled.section`
 const List = styled.ul``;
 
 const App = () => {
-    const [input, setInput] = React.useState('');
     const [responses, setResponses] = React.useState([]);
-    const [result, setResult] = React.useState(null);
 
-    async function getTest() {
+    const [results, setResults] = React.useState({});
+    const clearResult = name =>
+        setResults(prevState => {
+            const { [name]: __, ...newState } = prevState;
+            return newState;
+        });
+
+    const getExample = async () => {
         const response = await fetch(`${BASE_URL}/api/example`);
         const data = await response.json();
         setResponses(prevState => [data, ...prevState]);
-        setResult(data);
-    }
+        setResults(prevState => ({ ...prevState, getExample: data }));
+    };
 
     return (
         <>
@@ -81,34 +88,35 @@ const App = () => {
 
                 <Card>
                     <h3>Input</h3>
-                    <Input
-                        value={input}
-                        onClick={getTest}
-                        onChange={e => setInput(e.target.value)}
-                    >
-                        Test
-                    </Input>
 
-                    {result && (
+                    <Form debug onSubmit={getExample}>
+                        <Input required name="name" title="Name" />
+                        <Button type="submit">Submit</Button>
+                    </Form>
+
+                    {results.getExample && (
                         <>
                             <h3>Result</h3>
-                            <Code box>
-                                {result.string ? result.string : result}
-                            </Code>
+                            <Code box>{results.getExample}</Code>
+                            <Button onClick={() => clearResult('getExample')}>
+                                Clear
+                            </Button>
                         </>
                     )}
+                </Card>
 
-                    {responses.length > 0 && (
-                        <>
-                            <h3>Responses</h3>
+                {responses.length > 0 && (
+                    <>
+                        <Title as="h2">Responses</Title>
+                        <Card>
                             {responses.map((e, i) => (
                                 <Code box key={i}>
                                     {e}
                                 </Code>
                             ))}
-                        </>
-                    )}
-                </Card>
+                        </Card>
+                    </>
+                )}
             </Layout>
         </>
     );
