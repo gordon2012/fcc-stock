@@ -1,6 +1,9 @@
 {
     "name": "fcc-boilerplate-infosec-mongo",
     "version": 2,
+    "env": {
+        "ATLAS_URI": "@boilerplate-atlas-uri"
+    },
     "builds": [
         { "src": "server/index.js", "use": "@now/node-server" },
         {

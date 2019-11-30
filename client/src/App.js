@@ -3,10 +3,11 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { BASE_URL } from './index';
 
 import Layout from './components/Layout';
+import Card from './components/Card';
 import Code from './components/Code';
+import Form from './components/Form';
 import Input from './components/Input';
 import Button from './components/Button';
-import Form from './components/Form';
 
 const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono|Ubuntu:400,700&display=swap');
@@ -17,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         margin: 0;
+        padding: 0 1rem;
         background: #fae8f5;
         font-family: "Ubuntu", "Helvetica", sans-serif;
     }
