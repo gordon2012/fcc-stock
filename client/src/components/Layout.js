@@ -1,32 +1,34 @@
 import React from 'react';
-import styled from 'styled-components';
 
-const Flex = styled.div`
-    display: flex;
-    ${props => (props.column ? 'flex-direction: column' : '')}
-    ${props => (props.full ? 'min-height: 100vh;' : '')}
-`;
+const Flex = ({ column, full, ...props }) => (
+    <div
+        {...props}
+        style={{
+            display: 'flex',
 
-const Box = styled.div`
-    ${props => (props.flex ? `flex: ${props.flex};` : '')}
-`;
+            flexDirection: column ? 'column' : 'row',
+            minHeight: full ? '100vh' : 'none',
+        }}
+    />
+);
 
-const Container = styled.div`
-    ${props =>
-        props.width
-            ? `
-        max-width: ${props.width};
-        margin: 0 auto;
-    `
-            : ''}
-`;
+const Box = ({ flex, ...props }) => {
+    const style = flex ? { flex: flex } : {};
+    return <div {...props} style={style} />;
+};
 
-const StyledFooter = styled.footer`
-    padding: 1rem 0;
-    text-align: center;
-`;
+const Container = ({ width, ...props }) => {
+    const style = width ? { maxWidth: width, margin: '0 auto' } : {};
+    return <div {...props} style={style} />;
+};
+
 const Footer = () => (
-    <StyledFooter>
+    <footer
+        style={{
+            padding: '1rem 0',
+            textAlign: 'center',
+        }}
+    >
         A{' '}
         <a
             href="https://freecodecamp.org"
@@ -36,7 +38,7 @@ const Footer = () => (
             freeCodeCamp
         </a>{' '}
         Information Security and Quality Assurance Project
-    </StyledFooter>
+    </footer>
 );
 
 const Layout = ({ children }) => {

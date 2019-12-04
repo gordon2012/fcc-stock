@@ -1,9 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import Code from './Code';
-
-const StyledForm = styled.form``;
 
 const Form = ({ blank, children, debug, onSubmit, ...restProps }) => {
     let elements = React.Children.toArray(children);
@@ -55,9 +52,9 @@ const Form = ({ blank, children, debug, onSubmit, ...restProps }) => {
 
     return (
         <>
-            <StyledForm onSubmit={handleSubmit} {...restProps}>
+            <form onSubmit={handleSubmit} {...restProps}>
                 {elements}
-            </StyledForm>
+            </form>
             {debug && Object.keys(input).length > 0 && <Code box>{input}</Code>}
         </>
     );

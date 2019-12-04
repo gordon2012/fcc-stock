@@ -1,18 +1,19 @@
-import styled from 'styled-components';
+import React from 'react';
 
-const Button = styled.button`
-    width: 100%;
-    border-radius: 3px;
-    padding: 0.5rem 0;
-    margin-bottom: 0.5rem;
-    background: transparent;
-    color: white;
-    border: 2px solid #e65100;
-    text-align: center;
-    background: #e65100;
-    &:hover {
-        cursor: pointer;
-    }
-`;
+const Button = props => (
+    <button
+        {...props}
+        style={{
+            width: '100%',
+            borderRadius: '3px',
+            padding: '0.5rem 0',
+            marginBottom: '0.5rem',
+            color: 'white',
+            border: '2px solid #e65100',
+            textAlign: 'center',
+            background: '#e65100',
+        }}
+    />
+);
 
 export default Button;

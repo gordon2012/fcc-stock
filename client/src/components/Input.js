@@ -1,37 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { uuidv4 } from '../utils/utils';
 
-const StyledInput = styled.div`
-    display: flex;
-    align-items: center;
+const style = {
+    wrap: {
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: '0.5rem',
+    },
 
-    &:not(:last-child) {
-        margin-bottom: 0.5rem;
-    }
+    label: {
+        background: 'rgba(255, 255, 255, 0.2)',
+        padding: ' 0.25rem 0.5rem',
+        marginRight: ' 0.5rem',
+        textAlign: ' right',
+        flex: ' 1',
+    },
 
-    label {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 0.25rem 0.5rem;
-        margin-right: 0.5rem;
-        text-align: right;
-        flex: 1;
-
-        &::after {
-            color: red;
-            content: ' *';
-            opacity: ${props => (props.required ? 1 : 0)};
-        }
-    }
-
-    input,
-    select {
-        flex: 3;
-        font-family: 'Ubuntu Mono', monospace;
-        font-size: 1em;
-    }
-`;
+    input: {
+        flex: '3',
+        fontFamily: `'Ubuntu Mono', monospace`,
+        fontSize: '1em',
+    },
+};
 
 const Input = ({ required, name, title, type, options, onChange, value }) => {
     const [id] = React.useState(() => uuidv4());
@@ -41,8 +32,10 @@ const Input = ({ required, name, title, type, options, onChange, value }) => {
     };
 
     return (
-        <StyledInput required={required}>
-            <label htmlFor={`${name}-${id}`}>{title || name}</label>
+        <div required={required} style={style.wrap}>
+            <label htmlFor={`${name}-${id}`} style={style.label}>
+                {title || name}
+            </label>
 
             {type === 'dropdown' ? (
                 <select
@@ -51,6 +44,7 @@ const Input = ({ required, name, title, type, options, onChange, value }) => {
                     value={value || ''}
                     onChange={handleChange}
                     required={required}
+                    style={style.input}
                 >
                     {[['', '--Please Select--'], ...options].map(
                         ([value, label], i) => (
@@ -67,9 +61,10 @@ const Input = ({ required, name, title, type, options, onChange, value }) => {
                     value={value || ''}
                     onChange={handleChange}
                     required={required}
+                    style={style.input}
                 />
             )}
-        </StyledInput>
+        </div>
     );
 };
 
