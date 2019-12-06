@@ -37,11 +37,11 @@ const App = () => {
             return newState;
         });
 
-    const getExample = async () => {
-        const response = await fetch(`${BASE_URL}/api/example`);
-        const data = await response.json();
+    const getStock = async ({ stock }) => {
+        const res = await fetch(`${BASE_URL}/api/stock-prices?stock=${stock}`);
+        const data = await res.json();
         setResponses(prevState => [data, ...prevState]);
-        setResults(prevState => ({ ...prevState, getExample: data }));
+        setResults(prevState => ({ ...prevState, getStock: data }));
     };
 
     return (
@@ -116,16 +116,16 @@ const App = () => {
             <Card>
                 <h3>Input</h3>
 
-                <Form debug onSubmit={getExample}>
-                    <Input required name="name" title="Name" />
+                <Form blank onSubmit={getStock}>
+                    <Input required name="stock" title="Stock" />
                     <Button type="submit">Submit</Button>
                 </Form>
 
-                {results.getExample && (
+                {results.getStock && (
                     <>
                         <h3>Result</h3>
-                        <Code box>{results.getExample}</Code>
-                        <Button onClick={() => clearResult('getExample')}>
+                        <Code box>{results.getStock}</Code>
+                        <Button onClick={() => clearResult('getStock')}>
                             Clear
                         </Button>
                     </>

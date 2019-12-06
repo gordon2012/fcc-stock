@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const axios = require('axios');
 
 const connect = require('./connect');
-const exampleSchema = require('./models/example');
+const stockSchema = require('./models/stock');
 
 const app = express();
 const origin =
@@ -12,12 +13,34 @@ const origin =
 app.use(cors({ origin }));
 app.use(express.json());
 
-app.get('/api/example', async (req, res) => {
+app.get('/api/stock-prices', async (req, res) => {
     try {
-        // const Example = await connect('example', exampleSchema);
-        // const example = await Example.create({ name: 'Hello World' });
-        // res.status(200).json(example.toJSON());
-        res.status(200).json({ hello: 'world' });
+        const { stock } = req.query;
+
+        if (!stock) {
+            return res.status(200).json('missing stock');
+        }
+
+        // get stock from api
+        const rawStockData = await axios.get(
+            `https://repeated-alpaca.glitch.me/v1/stock/${stock}/quote`
+        );
+
+        // check db for record, create if not exists
+        const Stock = await connect('stock', stockSchema);
+        const savedStock = await Stock.findOneAndUpdate(
+            { stock },
+            {},
+            { upsert: true, new: true }
+        );
+
+        return res.status(200).json({
+            stockData: {
+                stock,
+                price: rawStockData.data.latestPrice,
+                likes: savedStock.likes.length,
+            },
+        });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

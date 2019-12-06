@@ -47,7 +47,14 @@ const Form = ({ blank, children, debug, onSubmit, ...restProps }) => {
     const handleSubmit = event => {
         event.preventDefault();
         onSubmit(input);
-        setRawInput({});
+        setRawInput(
+            blank
+                ? elements
+                      .filter(e => e.props.name)
+                      .map(e => e.props.name)
+                      .reduce((a, c) => ({ ...a, [c]: '' }), {})
+                : {}
+        );
     };
 
     return (
