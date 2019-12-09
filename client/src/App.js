@@ -28,8 +28,6 @@ const Title = ({ children, as, ...props }) => {
 const List = props => <ul {...props} />;
 
 const App = () => {
-    const [responses, setResponses] = React.useState([]);
-
     const [results, setResults] = React.useState({});
     const clearResult = name =>
         setResults(prevState => {
@@ -55,7 +53,6 @@ const App = () => {
         const params = new URLSearchParams(query).toString();
         const res = await fetch(`${BASE_URL}/api/stock-prices?${params}`);
         const data = await res.json();
-        setResponses(prevState => [data, ...prevState]);
         setResults(prevState => ({ ...prevState, getStock: data }));
     };
 
@@ -131,7 +128,7 @@ const App = () => {
             <Card>
                 <h3>Input</h3>
 
-                <Form debug onSubmit={getStock}>
+                <Form onSubmit={getStock}>
                     <Input required name="stock" title="Stock 1" />
                     <Input type="checkbox" name="like" title="Like?" />
                     <br />
@@ -150,19 +147,6 @@ const App = () => {
                     </>
                 )}
             </Card>
-
-            {responses.length > 0 && (
-                <>
-                    <Title as="h2">Responses</Title>
-                    <Card>
-                        {responses.map((e, i) => (
-                            <Code box key={i}>
-                                {e}
-                            </Code>
-                        ))}
-                    </Card>
-                </>
-            )}
         </Layout>
     );
 };

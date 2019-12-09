@@ -1,6 +1,9 @@
 {
     "name": "fcc-stock",
     "version": 2,
+    "env": {
+        "ATLAS_URI": "@stock-atlas-uri"
+    },
     "builds": [
         { "src": "server/index.js", "use": "@now/node-server" },
         {
@@ -11,7 +14,7 @@
     ],
     "routes": [
         {
-            "src": "/api/example",
+            "src": "/api/stock-prices",
             "dest": "/server/index.js",
             "methods": ["GET"]
         },
