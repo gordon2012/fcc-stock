@@ -37,8 +37,23 @@ const App = () => {
             return newState;
         });
 
-    const getStock = async ({ stock }) => {
-        const res = await fetch(`${BASE_URL}/api/stock-prices?stock=${stock}`);
+    const getStock = async ({ stock, like, stock2, like2 }) => {
+        let query = {};
+        if (stock) {
+            query.stock = stock;
+            if (like) {
+                query.like = like;
+            }
+        }
+        if (stock2) {
+            query.stock2 = stock2;
+            if (like2) {
+                query.like2 = like2;
+            }
+        }
+
+        const params = new URLSearchParams(query).toString();
+        const res = await fetch(`${BASE_URL}/api/stock-prices?${params}`);
         const data = await res.json();
         setResponses(prevState => [data, ...prevState]);
         setResults(prevState => ({ ...prevState, getStock: data }));
@@ -116,8 +131,12 @@ const App = () => {
             <Card>
                 <h3>Input</h3>
 
-                <Form blank onSubmit={getStock}>
-                    <Input required name="stock" title="Stock" />
+                <Form debug onSubmit={getStock}>
+                    <Input required name="stock" title="Stock 1" />
+                    <Input type="checkbox" name="like" title="Like?" />
+                    <br />
+                    <Input name="stock2" title="Stock 2" />
+                    <Input type="checkbox" name="like2" title="Like?" />
                     <Button type="submit">Submit</Button>
                 </Form>
 

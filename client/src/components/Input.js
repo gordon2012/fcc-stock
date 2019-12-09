@@ -22,13 +22,29 @@ const style = {
         fontFamily: `'Ubuntu Mono', monospace`,
         fontSize: '1em',
     },
+
+    checkbox: {
+        flex: '3',
+    },
 };
 
-const Input = ({ required, name, title, type, options, onChange, value }) => {
+const Input = ({
+    required,
+    name,
+    title,
+    type = 'text',
+    options,
+    onChange,
+    value,
+}) => {
     const [id] = React.useState(() => uuidv4());
 
     const handleChange = event => {
         onChange(name, event.target.value);
+    };
+
+    const handleCheckboxChange = event => {
+        onChange(name, event.target.checked || '');
     };
 
     return (
@@ -37,7 +53,7 @@ const Input = ({ required, name, title, type, options, onChange, value }) => {
                 {title || name}
             </label>
 
-            {type === 'dropdown' ? (
+            {type === 'dropdown' && (
                 <select
                     id={`${name}-${id}`}
                     name={name}
@@ -54,7 +70,22 @@ const Input = ({ required, name, title, type, options, onChange, value }) => {
                         )
                     )}
                 </select>
-            ) : (
+            )}
+
+            {type === 'checkbox' && (
+                <div style={style.checkbox}>
+                    <input
+                        type="checkbox"
+                        id={`${name}-${id}`}
+                        name={name}
+                        checked={value || false}
+                        onChange={handleCheckboxChange}
+                        required={required}
+                    />
+                </div>
+            )}
+
+            {type === 'text' && (
                 <input
                     id={`${name}-${id}`}
                     name={name}
